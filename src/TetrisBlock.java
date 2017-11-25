@@ -26,18 +26,26 @@ public abstract class TetrisBlock implements KeyListener {
 			
 			//rotate
 			case KeyEvent.VK_UP:
-		
+				myRotation -= 90;
+				if (myRotation == -360) {
+					myRotation = 0;
+				}
+				break;
 			//increase speed down temporarily
 			case KeyEvent.VK_DOWN:
-			
+				myTranslation[1] += -1;
+				break;
 			//strafe left
 			case KeyEvent.VK_LEFT:
-				
+				myTranslation[0] += -1;
+				break;
 			//strafe right
 			case KeyEvent.VK_RIGHT:
-				
+				myTranslation[0] += 1;
+				break;
 			//drop down
-			case KeyEvent.VK_SPACE:		
+			case KeyEvent.VK_SPACE:
+				break;
 		}
 	}
 	

@@ -14,6 +14,7 @@ public class OBlock extends TetrisBlock {
 		gl.glTranslated(myTranslation[0], myTranslation[1], 0);
 		//yellow block needs to be translated to right 1 more time
 		gl.glTranslated(1, 0, 0);
+		gl.glRotated(myRotation, 0, 0, 1);
 		
 		gl.glPolygonMode(GL2.GL_FRONT_AND_BACK, GL2.GL_FILL);
 		
