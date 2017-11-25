@@ -4,15 +4,18 @@ public class JBlock extends TetrisBlock {
 
 	//blue block
 	private double[] colour = { 0, 0, 1 };
+//	private double[] myTranslation = { 4, 18 };
 	
-	public JBlock() {}
+	public JBlock() {
+		super(new double[] { 4, 18 });
+	}
 
 	@Override
 	public void draw(GL2 gl) {
 		gl.glPushMatrix();
 		
 		gl.glTranslated(myTranslation[0], myTranslation[1], 0);
-		gl.glTranslated(1, -2, 0);
+//		gl.glTranslated(1, -2, 0);
 		gl.glRotated(myRotation, 0, 0, 1);
 		
 		gl.glPolygonMode(GL2.GL_FRONT_AND_BACK, GL2.GL_FILL);

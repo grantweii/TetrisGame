@@ -4,6 +4,9 @@ public class Grid {
 	public double x = 10;
 	public double y = 20;
 	
+	//make bottom left 0,0 
+	public double[] myTranslation = { -5, -10 };
+	
 	//10 x 20 grid 
 	public int[][] grid = { {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},

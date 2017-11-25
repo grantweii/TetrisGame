@@ -24,7 +24,7 @@ public class Game extends JFrame implements GLEventListener {
 	public Game() {
 		game = this;
 		grid = new Grid();
-		currentBlock = new SBlock();
+		currentBlock = new TBlock();
 	}
 	
 	public void run() {
@@ -56,8 +56,7 @@ public class Game extends JFrame implements GLEventListener {
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 		gl.glLoadIdentity();
 		
-		//make bottom left 0,0 
-		gl.glTranslated(-5, -10, 0);
+		gl.glTranslated(grid.myTranslation[0], grid.myTranslation[1], 0);
 		
 		currentBlock.draw(gl);
 

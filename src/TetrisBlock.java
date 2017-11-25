@@ -11,8 +11,12 @@ public abstract class TetrisBlock implements KeyListener {
 	public double y;
 	
 	//starting translation and rotation
-	protected double[] myTranslation = { 3, 20 };
 	protected double myRotation = 0;
+	protected double[] myTranslation;
+	
+	public TetrisBlock(double[] translation) {
+		this.myTranslation = translation;
+	}
 	
 	
 	/**
