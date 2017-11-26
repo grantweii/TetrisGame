@@ -25,6 +25,12 @@ public abstract class TetrisBlock implements KeyListener {
 	 */
 	public abstract void draw(GL2 gl);
 	
+//	public double[] getGlobalPosition() {
+//		double[] globalPosition = new double[3];
+//		
+//		
+//	}
+	
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
 			
