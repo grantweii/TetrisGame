@@ -3,7 +3,9 @@ import com.jogamp.opengl.GL2;
 public class SBlock extends TetrisBlock {
 	
 	//green
-	private double[] colour = { 0, 0.9, 0 };
+	private static final double[] colour = { 0, 0.9, 0 };
+	private static final double[] myTranslation = { 4, -1 };
+
 	private static final double[][] coordinates0 = { {0, 1}, {1, 1}, {1, 0}, {0, 0},
 												     {1, 1}, {2, 1}, {2, 0}, {1, 0}, 
 												     {0, 0}, {1, 0}, {1, -1}, {0, -1},
@@ -22,8 +24,8 @@ public class SBlock extends TetrisBlock {
 												       {-2, 0}, {-1, 0}, {-1, -1}, {-2, -1} }; 
 
 	
-	public SBlock() {
-		super(new double[] { 4, 19 });
+	public SBlock(Grid grid) {
+		super(grid, myTranslation, colour, coordinates0, coordinates90, coordinates180, coordinates270);
 	}
 
 	@Override

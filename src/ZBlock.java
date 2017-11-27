@@ -3,7 +3,9 @@ import com.jogamp.opengl.GL2;
 public class ZBlock extends TetrisBlock {
 
 	//red block
-	private double[] colour = { 1, 0, 0 };
+	private static final double[] colour = { 1, 0, 0 };
+	private static final double[] myTranslation = { 5, -1 };
+
 	private static final double[][] coordinates0 = { {-2, 1}, {-1, 1}, {-1, 0}, {-2, 0},
 												     {-1, 1}, {0, 1}, {0, 0}, {-1, 0}, 
 												     {-1, 0}, {0, 0}, {0, -1}, {-1, -1},
@@ -21,8 +23,8 @@ public class ZBlock extends TetrisBlock {
 												       {-1, 1}, {0, 1}, {0, 0}, {-1, 0},
 												       {0, 1}, {1, 1}, {1, 0}, {0, 0} }; 
 
-	public ZBlock() {
-		super(new double[] { 5, 19 });
+	public ZBlock(Grid grid) {
+		super(grid, myTranslation, colour, coordinates0, coordinates90, coordinates180, coordinates270);
 	}
 
 	@Override

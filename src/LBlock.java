@@ -3,7 +3,9 @@ import com.jogamp.opengl.GL2;
 public class LBlock extends TetrisBlock {
 	
 	//orange block
-	private double[] colour = { 1, 0.5, 0 };
+	private static final double[] colour = { 1, 0.5, 0 };
+	private static final double[] myTranslation = { 5, -1 };
+
 	private static final double[][] coordinates0 = { {-2, 0}, {-1, 0}, {-1, -1}, {-2, -1},
 							  					     {-1, 0}, {0, 0}, {0, -1}, {-1, -1}, 
 												     {0, 0}, {1, 0}, {1, -1}, {0, -1},
@@ -22,8 +24,8 @@ public class LBlock extends TetrisBlock {
 												       {0, 2}, {1, 2}, {1, 1}, {0, 1} }; 
 	
 
-	public LBlock() {
-		super(new double[] { 5, 19 });
+	public LBlock(Grid grid) {
+		super(grid, myTranslation, colour, coordinates0, coordinates90, coordinates180, coordinates270);
 	}
 	
 	@Override
@@ -55,27 +57,7 @@ public class LBlock extends TetrisBlock {
 					gl.glVertex2d(coordinates270[i][0], coordinates270[i][1]);
 				}
 			}
-			
-//			gl.glVertex2d(-2, 0);
-//			gl.glVertex2d(-1, 0);
-//			gl.glVertex2d(-1, -1);
-//			gl.glVertex2d(-2, -1);
-//			
-//			gl.glVertex2d(-1, 0);
-//			gl.glVertex2d(0, 0);
-//			gl.glVertex2d(0, -1);
-//			gl.glVertex2d(-1, -1);
-//			
-//			gl.glVertex2d(0, 0);
-//			gl.glVertex2d(1, 0);
-//			gl.glVertex2d(1, -1);
-//			gl.glVertex2d(0, -1);
-//			
-//			gl.glVertex2d(0, 1);
-//			gl.glVertex2d(1, 1);
-//			gl.glVertex2d(1, 0);
-//			gl.glVertex2d(0, 0);
-	
+
 		gl.glEnd();
 		
 		gl.glPolygonMode(GL2.GL_FRONT_AND_BACK, GL2.GL_LINE);
@@ -100,26 +82,7 @@ public class LBlock extends TetrisBlock {
 					gl.glVertex2d(coordinates270[i][0], coordinates270[i][1]);
 				}
 			}
-			
-//			gl.glVertex2d(-2, 0);
-//			gl.glVertex2d(-1, 0);
-//			gl.glVertex2d(-1, -1);
-//			gl.glVertex2d(-2, -1);
-//			
-//			gl.glVertex2d(-1, 0);
-//			gl.glVertex2d(0, 0);
-//			gl.glVertex2d(0, -1);
-//			gl.glVertex2d(-1, -1);
-//			
-//			gl.glVertex2d(0, 0);
-//			gl.glVertex2d(1, 0);
-//			gl.glVertex2d(1, -1);
-//			gl.glVertex2d(0, -1);
-//			
-//			gl.glVertex2d(0, 1);
-//			gl.glVertex2d(1, 1);
-//			gl.glVertex2d(1, 0);
-//			gl.glVertex2d(0, 0);
+
 		gl.glEnd();
 		
 		gl.glPolygonMode(GL2.GL_FRONT_AND_BACK, GL2.GL_FILL);

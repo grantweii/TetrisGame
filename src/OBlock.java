@@ -3,14 +3,16 @@ import com.jogamp.opengl.GL2;
 public class OBlock extends TetrisBlock {
 	
 	//yellow
-	public double[] colour = { 0.9, 0.9, 0 };
+	private static final double[] colour = { 0.9, 0.9, 0 };
+	private static final double[] myTranslation = { 5, -1 };
+
 	private static final double[][] coordinates = { {-1, 1}, {0, 1}, {0, 0}, {-1, 0},
 												    {0, 1}, {1, 1}, {1, 0}, {0, 0}, 
 												    {0, 0}, {1, 0}, {1, -1}, {0, -1},
 												    {-1, 0}, {0, 0}, {0, -1}, {-1, -1} }; 
 
-	public OBlock() {
-		super(new double[] {5, 19} );
+	public OBlock(Grid grid) {
+		super(grid, myTranslation, colour, coordinates, coordinates, coordinates, coordinates);
 	}
 	
 	@Override
