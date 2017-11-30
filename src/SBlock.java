@@ -59,67 +59,6 @@ public class SBlock extends TetrisBlock {
 				}
 			}
 			
-//			if (myRotation == 0) {
-//				gl.glVertex2d(0, 1);
-//				gl.glVertex2d(1, 1);
-//				gl.glVertex2d(1, 0);
-//				gl.glVertex2d(0, 0);
-//				
-//				gl.glVertex2d(1, 1);
-//				gl.glVertex2d(2, 1);
-//				gl.glVertex2d(2, 0);
-//				gl.glVertex2d(1, 0);
-//				
-//				gl.glVertex2d(0, 0);
-//				gl.glVertex2d(1, 0);
-//				gl.glVertex2d(1, -1);
-//				gl.glVertex2d(0, -1);
-//				
-//				gl.glVertex2d(-1, 0);
-//				gl.glVertex2d(0, 0);
-//				gl.glVertex2d(0, -1);
-//				gl.glVertex2d(-1, -1);
-//			} else if (myRotation == -90) {
-//				gl.glVertex2d(0, 2);
-//				gl.glVertex2d(1, 2);
-//				gl.glVertex2d(1, 1);
-//				gl.glVertex2d(0, 1);
-//				
-//				gl.glVertex2d(1, 2);
-//				gl.glVertex2d(2, 2);
-//				gl.glVertex2d(2, 1);
-//				gl.glVertex2d(1, 1);
-//				
-//				gl.glVertex2d(0, 1);
-//				gl.glVertex2d(1, 1);
-//				gl.glVertex2d(1, 0);
-//				gl.glVertex2d(0, 0);
-//				
-//				gl.glVertex2d(-1, 1);
-//				gl.glVertex2d(0, 1);
-//				gl.glVertex2d(0, 0);
-//				gl.glVertex2d(-1, 0);
-//			} else if (myRotation == -180 || myRotation == -270) {
-//				gl.glVertex2d(-1, 1);
-//				gl.glVertex2d(0, 1);
-//				gl.glVertex2d(0, 0);
-//				gl.glVertex2d(-1, 0);
-//				
-//				gl.glVertex2d(0, 1);
-//				gl.glVertex2d(1, 1);
-//				gl.glVertex2d(1, 0);
-//				gl.glVertex2d(0, 0);
-//				
-//				gl.glVertex2d(-1, 0);
-//				gl.glVertex2d(0, 0);
-//				gl.glVertex2d(0, -1);
-//				gl.glVertex2d(-1, -1);
-//				
-//				gl.glVertex2d(-2, 0);
-//				gl.glVertex2d(-1, 0);
-//				gl.glVertex2d(-1, -1);
-//				gl.glVertex2d(-2, -1);
-//			}
 		gl.glEnd();
 		
 		gl.glPolygonMode(GL2.GL_FRONT_AND_BACK, GL2.GL_LINE);
@@ -145,72 +84,14 @@ public class SBlock extends TetrisBlock {
 				}
 			}
 			
-//			if (myRotation == 0) {
-//				gl.glVertex2d(0, 1);
-//				gl.glVertex2d(1, 1);
-//				gl.glVertex2d(1, 0);
-//				gl.glVertex2d(0, 0);
-//				
-//				gl.glVertex2d(1, 1);
-//				gl.glVertex2d(2, 1);
-//				gl.glVertex2d(2, 0);
-//				gl.glVertex2d(1, 0);
-//				
-//				gl.glVertex2d(0, 0);
-//				gl.glVertex2d(1, 0);
-//				gl.glVertex2d(1, -1);
-//				gl.glVertex2d(0, -1);
-//				
-//				gl.glVertex2d(-1, 0);
-//				gl.glVertex2d(0, 0);
-//				gl.glVertex2d(0, -1);
-//				gl.glVertex2d(-1, -1);
-//			} else if (myRotation == -90) {
-//				gl.glVertex2d(0, 2);
-//				gl.glVertex2d(1, 2);
-//				gl.glVertex2d(1, 1);
-//				gl.glVertex2d(0, 1);
-//				
-//				gl.glVertex2d(1, 2);
-//				gl.glVertex2d(2, 2);
-//				gl.glVertex2d(2, 1);
-//				gl.glVertex2d(1, 1);
-//				
-//				gl.glVertex2d(0, 1);
-//				gl.glVertex2d(1, 1);
-//				gl.glVertex2d(1, 0);
-//				gl.glVertex2d(0, 0);
-//				
-//				gl.glVertex2d(-1, 1);
-//				gl.glVertex2d(0, 1);
-//				gl.glVertex2d(0, 0);
-//				gl.glVertex2d(-1, 0);
-//			} else if (myRotation == -180 || myRotation == -270) {
-//				gl.glVertex2d(-1, 1);
-//				gl.glVertex2d(0, 1);
-//				gl.glVertex2d(0, 0);
-//				gl.glVertex2d(-1, 0);
-//				
-//				gl.glVertex2d(0, 1);
-//				gl.glVertex2d(1, 1);
-//				gl.glVertex2d(1, 0);
-//				gl.glVertex2d(0, 0);
-//				
-//				gl.glVertex2d(-1, 0);
-//				gl.glVertex2d(0, 0);
-//				gl.glVertex2d(0, -1);
-//				gl.glVertex2d(-1, -1);
-//				
-//				gl.glVertex2d(-2, 0);
-//				gl.glVertex2d(-1, 0);
-//				gl.glVertex2d(-1, -1);
-//				gl.glVertex2d(-2, -1);
-//			}
 		gl.glEnd();
 		
 		gl.glPolygonMode(GL2.GL_FRONT_AND_BACK, GL2.GL_FILL);
 		
-	gl.glPopMatrix();
+		gl.glPopMatrix();
+		
+		updateGlobalCoordinates();
+		findLowestYCoord();
 		
 	}
 }

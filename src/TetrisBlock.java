@@ -2,6 +2,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.AbstractSet;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -139,6 +141,26 @@ public abstract class TetrisBlock implements KeyListener {
 				}
 			}
 		}
+		for (Integer[] coord: lowestCoordinates) {
+			System.out.println("x " + coord[0]);
+			System.out.println("y " + coord[1]);
+			
+		}
+		
+		Comparator<Integer[]> c = new Comparator<Integer[]>() {
+			public int compare(Integer[] coord1, Integer[] coord2) {
+				if (coord1[0] < coord2[0]) {
+					return -1;
+				} else if (coord1[0] > coord2[0]) {
+					return 1;
+				} else {
+					return 0;
+				}
+			}
+		};
+		
+		Collections.sort(lowestCoordinates, c);
+		
 		return lowestCoordinates;
 	}
 	
@@ -170,6 +192,40 @@ public abstract class TetrisBlock implements KeyListener {
 			globalCoordinates.add(tuple);
 		}
 		return globalCoordinates;
+	}
+	
+	public ArrayList<Integer[]> lines(ArrayList<Integer[]> coords) {
+		ArrayList<Integer[]> line = new ArrayList<Integer[]>();
+		for (int i = 0; i < coords.size()-1; i++) {
+			// Y COORDS MUST BE SAME
+			// X COORDS MUST BE INCREMENTAL
+			if (coords.get(i)[1] < coords.get(i+1)[1]) {
+				Integer[] points = new Integer[4];
+				points[0] = coords.get(i)[0];
+				points[1] = coords.get(i)[1];
+				points[2] = coords.get(i+1)[0];
+				//y coord of second point is y coord of first point
+				points[3] = coords.get(i)[1];
+				line.add(points);
+			} else if (coords.get(i)[1] > coords.get(i+1)[1]) {
+				Integer[] points = new Integer[4];
+				//x coord of first point is the same
+				points[0] = coords.get(i)[0];
+				//y coord of first point is y coord of next point
+				points[1] = coords.get(i+1)[1];
+				points[2] = coords.get(i+1)[0];
+				points[3] = coords.get(i+1)[1];
+				line.add(points);
+			} else {
+				Integer[] points = new Integer[4];
+				points[0] = coords.get(i)[0];
+				points[1] = coords.get(i)[1];
+				points[2] = coords.get(i+1)[0];
+				points[3] = coords.get(i+1)[1];
+				line.add(points);
+			}
+		}
+		return line;
 	}
 	
 	public void keyPressed(KeyEvent e) {

@@ -86,7 +86,10 @@ public class TBlock extends TetrisBlock {
 		
 		gl.glPolygonMode(GL2.GL_FRONT_AND_BACK, GL2.GL_FILL);
 		
-	gl.glPopMatrix();
+		gl.glPopMatrix();
+		
+		updateGlobalCoordinates();
+		findLowestYCoord();
 		
 	}
 }

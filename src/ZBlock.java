@@ -85,6 +85,11 @@ public class ZBlock extends TetrisBlock {
 		gl.glEnd();
 		
 		gl.glPolygonMode(GL2.GL_FRONT_AND_BACK, GL2.GL_FILL);
+		
+		gl.glPopMatrix();
+		
+		updateGlobalCoordinates();
+		findLowestYCoord();
 	}
 
 }
