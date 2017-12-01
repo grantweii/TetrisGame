@@ -22,6 +22,12 @@ public class ZBlock extends TetrisBlock {
 											   	       {-1, 2}, {0, 2}, {0, 1}, {-1, 1}, 
 												       {-1, 1}, {0, 1}, {0, 0}, {-1, 0},
 												       {0, 1}, {1, 1}, {1, 0}, {0, 0} }; 
+	
+//	private static final double lowestY0 = -19;
+//	private static final double lowestY90 = -19;
+//	private static final double lowestY180 = 20;
+//	private static final double lowestY270 = 20;
+
 
 	public ZBlock(Grid grid) {
 		super(grid, myTranslation, colour, coordinates0, coordinates90, coordinates180, coordinates270);

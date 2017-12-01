@@ -240,21 +240,100 @@ public abstract class TetrisBlock implements KeyListener {
 				break;
 			//increase speed down temporarily
 			case KeyEvent.VK_DOWN:
-				myTranslation[1] += -1;
+				if (myRotation == 0) {
+					if (grid.checkBottomEdge(globalCoordinates0)) {
+						myTranslation[1] += -1;
+					}
+					break;
+				}
+				
+				if (myRotation == -90) {
+					if (grid.checkBottomEdge(globalCoordinates90)) {
+						myTranslation[1] += -1;
+					}
+					break;
+				}
+				
+				if (myRotation == -180) {
+					if (grid.checkBottomEdge(globalCoordinates180)) {
+						myTranslation[1] += -1;
+					}
+					break;
+				}
+				
+				if (myRotation == -270) {
+					if (grid.checkBottomEdge(globalCoordinates270)) {
+						myTranslation[1] += -1;
+					}
+					break;
+				}
 				break;
 			//strafe left
 			case KeyEvent.VK_LEFT:
-				myTranslation[0] += -1;
+				if (myRotation == 0) {
+					if (grid.checkLeftEdge(globalCoordinates0)) {
+						myTranslation[0] += -1;
+					}
+					break;
+				}
+				
+				if (myRotation == -90) {
+					if (grid.checkLeftEdge(globalCoordinates90)) {
+						myTranslation[0] += -1;
+					}
+					break;
+				}
+				
+				if (myRotation == -180) {
+					if (grid.checkLeftEdge(globalCoordinates180)) {
+						myTranslation[0] += -1;
+					}
+					break;
+				}
+				
+				if (myRotation == -270) {
+					if (grid.checkLeftEdge(globalCoordinates270)) {
+						myTranslation[0] += -1;
+					}
+					break;
+				}
 				break;
 			//strafe right
 			case KeyEvent.VK_RIGHT:
-				myTranslation[0] += 1;
+				if (myRotation == 0) {
+					if (grid.checkRightEdge(globalCoordinates0)) {
+						myTranslation[0] += 1;
+					}
+					break;
+				}
+				
+				if (myRotation == -90) {
+					if (grid.checkRightEdge(globalCoordinates90)) {
+						myTranslation[0] += 1;
+					}
+					break;
+				}
+				
+				if (myRotation == -180) {
+					if (grid.checkRightEdge(globalCoordinates180)) {
+						myTranslation[0] += 1;
+					}
+					break;
+				}
+				
+				if (myRotation == -270) {
+					if (grid.checkRightEdge(globalCoordinates270)) {
+						myTranslation[0] += 1;
+					}
+					break;
+				}
 				break;
 			//drop down
 			case KeyEvent.VK_SPACE:
 				break;
 		}
 	}
+	
 	
 	@Override
 	public void keyReleased(KeyEvent e) {
