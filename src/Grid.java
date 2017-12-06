@@ -38,9 +38,6 @@ public class Grid {
 	//global coordinates as points
 	public boolean checkLeftEdge(int[][] points) {
 		for (int i = 0; i < points.length; i++) {
-//			System.out.println("x: " + points[i][0]);
-//			System.out.println("y: " + points[i][1]);
-//			System.out.println("---");
 			if (points[i][0] == 0) {
 				return false;
 			}

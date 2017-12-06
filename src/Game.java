@@ -25,7 +25,7 @@ public class Game extends JFrame implements GLEventListener {
 	public Game() {
 		game = this;
 		grid = new Grid();
-		currentBlock = new ZBlock(grid);
+		currentBlock = new JBlock(grid);
 		lastTime = System.currentTimeMillis();
 	}
 	

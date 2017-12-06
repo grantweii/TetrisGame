@@ -27,10 +27,19 @@ public class JBlock extends TetrisBlock {
 	private static final int lowestY90 = -18; //0
 	private static final int lowestY180 = -19; //0
 	private static final int lowestY270 = -18; //-1
+	private static final int lowestX0 = 1; //-2
+	private static final int lowestX90 = 1; //-1
+	private static final int lowestX180 = 1; //-1
+	private static final int lowestX270 = 1; //-2
+	private static final int highestX0 = 8; //-2
+	private static final int highestX90 = 8; //-1
+	private static final int highestX180 = 8; //-1
+	private static final int highestX270 = 8; //-2
 	
 	public JBlock(Grid grid) {
-		super(grid, myTranslation, colour, coordinates0, coordinates90, coordinates180, coordinates270, lowestY0, lowestY90, lowestY180, lowestY270);
-	}
+		super(grid, myTranslation, colour, coordinates0, coordinates90, coordinates180, coordinates270, 
+				lowestY0, lowestY90, lowestY180, lowestY270, lowestX0, lowestX90, lowestX180, lowestX270,
+				highestX0, highestX90, highestX180, highestX270);	}
 
 	@Override
 	public void draw(GL2 gl) {

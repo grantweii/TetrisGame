@@ -92,17 +92,20 @@ public abstract class TetrisBlock implements KeyListener {
 		int[][] TRMatrix = MathUtil.multiply(myTranslationMatrix, myRotationMatrix);
 		int[][] matrix = MathUtil.multiply(TRMatrix, myScaleMatrix);
 		
-		System.out.println("0---- " + matrix[0][0]);
-		System.out.println(matrix[0][1]);
-		System.out.println(matrix[0][2]);
-		System.out.println("1---- " + matrix[1][0]);
-		System.out.println(matrix[1][1]);
-		System.out.println(matrix[1][2]);
-		System.out.println("2---- " + matrix[2][0]);
-		System.out.println(matrix[2][1]);
-		System.out.println(matrix[2][2]);
-
-		System.out.println("DONE");
+//		System.out.println("x---- ");
+//		System.out.println(matrix[0][0]);
+//		System.out.println(matrix[0][1]);
+//		System.out.println(matrix[0][2]);
+//		System.out.println("y---- ");
+//		System.out.println(matrix[1][0]);
+//		System.out.println(matrix[1][1]);
+//		System.out.println(matrix[1][2]);
+//		System.out.println("phi---- ");
+//		System.out.println(matrix[2][0]);
+//		System.out.println(matrix[2][1]);
+//		System.out.println(matrix[2][2]);
+//
+//		System.out.println("DONE");
 
 				
 		if (myRotation == 0) {
@@ -319,14 +322,6 @@ public abstract class TetrisBlock implements KeyListener {
 				} else if (myRotation == -270 && myTranslation[0] > highestX270) {
 					myTranslation[0] = highestX270;
 				}
-				
-				for (int i = 0; i < globalCoordinates90.length; i++) {
-					System.out.println("x: " + globalCoordinates90[i][0]);
-					System.out.println("y: " + globalCoordinates90[i][1]);
-					System.out.println("---");
-				}
-				System.out.println("DONE");
-
 				break;
 			//increase speed down temporarily
 			case KeyEvent.VK_DOWN:
@@ -371,12 +366,6 @@ public abstract class TetrisBlock implements KeyListener {
 					if (grid.checkLeftEdge(globalCoordinates90)) {
 						myTranslation[0] += -1;
 					}
-//					for (int i = 0; i < globalCoordinates90.length; i++) {
-//						System.out.println("x: " + globalCoordinates90[i][0]);
-//						System.out.println("y: " + globalCoordinates90[i][1]);
-//						System.out.println("---");
-//					}
-//					System.out.println("DONE");
 					break;
 				}
 				
@@ -407,12 +396,6 @@ public abstract class TetrisBlock implements KeyListener {
 					if (grid.checkRightEdge(globalCoordinates90)) {
 						myTranslation[0] += 1;
 					}
-					for (int i = 0; i < globalCoordinates90.length; i++) {
-						System.out.println("x: " + globalCoordinates90[i][0]);
-						System.out.println("y: " + globalCoordinates90[i][1]);
-						System.out.println("---");
-					}
-					System.out.println("DONE");
 					break;
 				}
 				

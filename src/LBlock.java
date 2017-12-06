@@ -26,11 +26,20 @@ public class LBlock extends TetrisBlock {
 	private static final int lowestY90 = -18; //1
 	private static final int lowestY180 = -19; //0
 	private static final int lowestY270 = -19; //0
+	private static final int lowestX0 = 2; //-2
+	private static final int lowestX90 = 2; //-1
+	private static final int lowestX180 = 2; //-1
+	private static final int lowestX270 = 2; //-2
+	private static final int highestX0 = 9; //-2
+	private static final int highestX90 = 9; //-1
+	private static final int highestX180 = 9; //-1
+	private static final int highestX270 = 9; //-2
 	
 
 	public LBlock(Grid grid) {
-		super(grid, myTranslation, colour, coordinates0, coordinates90, coordinates180, coordinates270, lowestY0, lowestY90, lowestY180, lowestY270);
-	}
+		super(grid, myTranslation, colour, coordinates0, coordinates90, coordinates180, coordinates270, 
+				lowestY0, lowestY90, lowestY180, lowestY270, lowestX0, lowestX90, lowestX180, lowestX270,
+				highestX0, highestX90, highestX180, highestX270);	}
 	
 	@Override
 	public void draw(GL2 gl) {

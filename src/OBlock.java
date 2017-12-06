@@ -10,10 +10,15 @@ public class OBlock extends TetrisBlock {
 												    {0, 1}, {1, 1}, {1, 0}, {0, 0}, 
 												    {0, 0}, {1, 0}, {1, -1}, {0, -1},
 												    {-1, 0}, {0, 0}, {0, -1}, {-1, -1} }; 
-	private static final int lowestY = -18;
+	private static final int lowestY = -19;
+	private static final int lowestX = 1;
+	private static final int highestX = 9;
+
 	
 	public OBlock(Grid grid) {
-		super(grid, myTranslation, colour, coordinates, coordinates, coordinates, coordinates, lowestY, lowestY, lowestY, lowestY);
+		super(grid, myTranslation, colour, coordinates, coordinates, coordinates, coordinates, 
+				lowestY, lowestY, lowestY, lowestY, lowestX, lowestX, lowestX, lowestX,
+				highestX, highestX, highestX, highestX);	
 	}
 	
 	@Override

@@ -28,7 +28,7 @@ public class ZBlock extends TetrisBlock {
 	private static final int lowestY180 = -19; //0
 	private static final int lowestY270 = -19; //0
 	private static final int lowestX0 = 2; //-2
-	private static final int lowestX90 = 1; //-1
+	private static final int lowestX90 = 2; //-1
 	private static final int lowestX180 = 2; //-1
 	private static final int lowestX270 = 2; //-2
 	private static final int highestX0 = 9; //-2
