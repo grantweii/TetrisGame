@@ -20,11 +20,13 @@ public class Game extends JFrame implements GLEventListener {
 	private Grid grid;
 	private TetrisBlock currentBlock;
 	public double gameSpeed;
+	public long lastTime;
 	
 	public Game() {
 		game = this;
 		grid = new Grid();
 		currentBlock = new ZBlock(grid);
+		lastTime = System.currentTimeMillis();
 	}
 	
 	public void run() {
@@ -57,6 +59,12 @@ public class Game extends JFrame implements GLEventListener {
 		gl.glLoadIdentity();
 		
 		gl.glTranslated(grid.myTranslation[0], grid.myTranslation[1], 0);
+		
+//		long currentTime = System.currentTimeMillis();
+//		if (currentTime - lastTime > 1000) {
+//			currentBlock.move();
+//			lastTime = currentTime;
+//		}
 		
 		currentBlock.draw(gl);
 

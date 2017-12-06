@@ -4,27 +4,31 @@ public class TBlock extends TetrisBlock {
 
 	//purple block
 	private static final double[] colour = { 0.5, 0, 1 };
-	private static final double[] myTranslation = { 4, -2 };
+	private static final int[] myTranslation = { 4, -2 };
 
-	private static final double[][] coordinates0 = { {0, 2}, {1, 2}, {1, 1}, {0, 1},
+	private static final int[][] coordinates0 = { {0, 2}, {1, 2}, {1, 1}, {0, 1},
 												     {-1, 1}, {0, 1}, {0, 0}, {-1, 0}, 
 												     {0, 1}, {1, 1}, {1, 0}, {0, 0},
 											 	     {1, 1}, {2, 1}, {2, 0}, {1, 0} }; 
-	private static final double[][] coordinates90 = { {-1, 2}, {0, 2}, {0, 1}, {-1, 1},
+	private static final int[][] coordinates90 = { {-1, 2}, {0, 2}, {0, 1}, {-1, 1},
 											   	      {-2, 1}, {-1, 1}, {-1, 0}, {-2, 0}, 
 												      {-1, 1}, {0, 1}, {0, 0}, {-1, 0},
 												      {0, 1}, {1, 1}, {1, 0}, {0, 0} }; 
-	private static final double[][] coordinates180 = { {-1, 1}, {0, 1}, {0, 0}, {-1, 0},
+	private static final int[][] coordinates180 = { {-1, 1}, {0, 1}, {0, 0}, {-1, 0},
 												       {-2, 0}, {-1, 0}, {-1, -1}, {-2, -1}, 
 												       {-1, 0}, {0, 0}, {0, -1}, {-1, -1},
 												       {0, 0}, {1, 0}, {1, -1}, {0, -1} }; 
-	private static final double[][] coordinates270 = { {0, 1}, {1, 1}, {1, 0}, {0, 0},
+	private static final int[][] coordinates270 = { {0, 1}, {1, 1}, {1, 0}, {0, 0},
 											   	       {-1, 0}, {0, 0}, {0, -1}, {-1, -1}, 
 												       {0, 0}, {1, 0}, {1, -1}, {0, -1},
 												       {1, 0}, {2, 0}, {2, -1}, {1, -1} }; 
+	private static final int lowestY0 = -19; //0
+	private static final int lowestY90 = -19; //0
+	private static final int lowestY180 = -19; //-1+1
+	private static final int lowestY270 = -19; //-1+1
 
 	public TBlock(Grid grid) {
-		super(grid, myTranslation, colour, coordinates0, coordinates90, coordinates180, coordinates270);
+		super(grid, myTranslation, colour, coordinates0, coordinates90, coordinates180, coordinates270, lowestY0, lowestY90, lowestY180, lowestY270);
 	}
 
 	@Override

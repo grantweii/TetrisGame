@@ -4,28 +4,41 @@ public class SBlock extends TetrisBlock {
 	
 	//green
 	private static final double[] colour = { 0, 0.9, 0 };
-	private static final double[] myTranslation = { 4, -1 };
+	private static final int[] myTranslation = { 4, -1 };
 
-	private static final double[][] coordinates0 = { {0, 1}, {1, 1}, {1, 0}, {0, 0},
+	private static final int[][] coordinates0 = { {0, 1}, {1, 1}, {1, 0}, {0, 0},
 												     {1, 1}, {2, 1}, {2, 0}, {1, 0}, 
 												     {0, 0}, {1, 0}, {1, -1}, {0, -1},
 											 	     {-1, 0}, {0, 0}, {0, -1}, {-1, -1} }; 
-	private static final double[][] coordinates90 = { {0, 2}, {1, 2}, {1, 1}, {0, 1},
+	private static final int[][] coordinates90 = { {0, 2}, {1, 2}, {1, 1}, {0, 1},
 										  	          {1, 2}, {2, 2}, {2, 1}, {1, 1}, 
 											          {0, 1}, {1, 1}, {1, 0}, {0, 0},
 											          {-1, 1}, {0, 1}, {0, 0}, {-1, 0} }; 
-	private static final double[][] coordinates180 = { {-1, 2}, {0, 2}, {0, 1}, {-1, 1},
+	private static final int[][] coordinates180 = { {-1, 2}, {0, 2}, {0, 1}, {-1, 1},
 										 	           {0, 2}, {1, 2}, {1, 1}, {0, 1}, 
 											           {-2, 1}, {-1, 1}, {-1, 0}, {-2, 0},
 											           {-1, 1}, {0, 1}, {0, 0}, {-1, 0} }; 
-	private static final double[][] coordinates270 = { {-1, 1}, {0, 1}, {0, 0}, {-1, 0},
+	private static final int[][] coordinates270 = { {-1, 1}, {0, 1}, {0, 0}, {-1, 0},
 											   	       {0, 1}, {1, 1}, {1, 0}, {0, 0}, 
 												       {-1, 0}, {0, 0}, {0, -1}, {-1, -1},
 												       {-2, 0}, {-1, 0}, {-1, -1}, {-2, -1} }; 
-
+	private static final int lowestY0 = -18; //-1
+	private static final int lowestY90 = -18; //0
+	private static final int lowestY180 = -19; //0
+	private static final int lowestY270 = -18; //-1
+	private static final int lowestX0 = 1; //-2
+	private static final int lowestX90 = 0; //-1
+	private static final int lowestX180 = 1; //-1
+	private static final int lowestX270 = 1; //-2
+	private static final int highestX0 = 9; //-2
+	private static final int highestX90 = 9; //-1
+	private static final int highestX180 = 9; //-1
+	private static final int highestX270 = 9; //-2
 	
 	public SBlock(Grid grid) {
-		super(grid, myTranslation, colour, coordinates0, coordinates90, coordinates180, coordinates270);
+		super(grid, myTranslation, colour, coordinates0, coordinates90, coordinates180, coordinates270, 
+				lowestY0, lowestY90, lowestY180, lowestY270, lowestX0, lowestX90, lowestX180, lowestX270,
+				highestX0, highestX90, highestX180, highestX270);	
 	}
 
 	@Override

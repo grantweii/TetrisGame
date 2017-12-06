@@ -14,26 +14,39 @@ public abstract class TetrisBlock implements KeyListener {
 
 	protected Grid grid;
 	
-	//these are global coordinates
-	protected double x;
-	protected double y;
-	
 	protected double[] colour;
-	protected double[][] coordinates0;
-	protected double[][] coordinates90;
-	protected double[][] coordinates180;
-	protected double[][] coordinates270;
+	protected int[][] coordinates0;
+	protected int[][] coordinates90;
+	protected int[][] coordinates180;
+	protected int[][] coordinates270;
 	protected int[][] globalCoordinates0;
 	protected int[][] globalCoordinates90;
 	protected int[][] globalCoordinates180;
 	protected int[][] globalCoordinates270;
+	protected int lowestY0;
+	protected int lowestY90;
+	protected int lowestY180;
+	protected int lowestY270;
+	protected int lowestX0;
+	protected int lowestX90;
+	protected int lowestX180;
+	protected int lowestX270;
+	protected int highestX0;
+	protected int highestX90;
+	protected int highestX180;
+	protected int highestX270;
+
 
 	
 	//starting translation and rotation
-	protected double myRotation = 0;
-	protected double[] myTranslation;
+	protected int myRotation = 0;
+	protected int[] myTranslation;
 	
-	public TetrisBlock(Grid grid, double[] translation, double[] colour, double[][] coordinates0, double[][] coordinates90, double[][] coordinates180, double[][] coordinates270) {
+	public TetrisBlock(Grid grid, int[] translation, double[] colour, int[][] coordinates0, 
+			int[][] coordinates90, int[][] coordinates180, int[][] coordinates270,
+			int lowestY0, int lowestY90, int lowestY180, int lowestY270, 
+			int lowestX0, int lowestX90, int lowestX180, int lowestX270,
+			int highestX0, int highestX90, int highestX180, int highestX270) {
 		this.grid = grid;
 		this.myTranslation = translation;
 		this.colour = colour;
@@ -41,10 +54,22 @@ public abstract class TetrisBlock implements KeyListener {
 		this.coordinates90 = coordinates90;
 		this.coordinates180 = coordinates180;
 		this.coordinates270 = coordinates270;
-		globalCoordinates0 = new int[16][2];
-		globalCoordinates90 = new int[16][2];
-		globalCoordinates180 = new int[16][2];
-		globalCoordinates270 = new int[16][2];
+		this.globalCoordinates0 = new int[16][2];
+		this.globalCoordinates90 = new int[16][2];
+		this.globalCoordinates180 = new int[16][2];
+		this.globalCoordinates270 = new int[16][2];
+		this.lowestY0 = lowestY0;
+		this.lowestY90 = lowestY90;
+		this.lowestY180 = lowestY180;
+		this.lowestY270 = lowestY270;
+		this.lowestX0 = lowestX0;
+		this.lowestX90 = lowestX90;
+		this.lowestX180 = lowestX180;
+		this.lowestX270 = lowestX270;
+		this.highestX0 = highestX0;
+		this.highestX90 = highestX90;
+		this.highestX180 = highestX180;
+		this.highestX270 = highestX270;
 	}
 	
 	
@@ -61,41 +86,62 @@ public abstract class TetrisBlock implements KeyListener {
 	 */
 	public void updateGlobalCoordinates() {		
 		//grid matrix is only the translation matrix
-		double[][] myTranslationMatrix = MathUtil.translationMatrix(myTranslation);
-		double[][] myRotationMatrix = MathUtil.rotationMatrix(myRotation);
-		double[][] matrix = MathUtil.multiply(myTranslationMatrix, myRotationMatrix);
+		int[][] myTranslationMatrix = MathUtil.translationMatrix(myTranslation);
+		int[][] myRotationMatrix = MathUtil.rotationMatrix(myRotation);
+		int[][] myScaleMatrix = MathUtil.scaleMatrix(1);
+		int[][] TRMatrix = MathUtil.multiply(myTranslationMatrix, myRotationMatrix);
+		int[][] matrix = MathUtil.multiply(TRMatrix, myScaleMatrix);
+		
+		System.out.println("0---- " + matrix[0][0]);
+		System.out.println(matrix[0][1]);
+		System.out.println(matrix[0][2]);
+		System.out.println("1---- " + matrix[1][0]);
+		System.out.println(matrix[1][1]);
+		System.out.println(matrix[1][2]);
+		System.out.println("2---- " + matrix[2][0]);
+		System.out.println(matrix[2][1]);
+		System.out.println(matrix[2][2]);
+
+		System.out.println("DONE");
+
 				
 		if (myRotation == 0) {
 			for (int i = 0; i < coordinates0.length; i++) {
-				double[] localPosition = { coordinates0[i][0], coordinates0[i][1], 1 };
-				double[] globalPosition = MathUtil.multiply(matrix, localPosition);
+				int[] localPosition = { (int) coordinates0[i][0], (int) coordinates0[i][1], 1 };
+				int[] globalPosition = MathUtil.multiply(matrix, localPosition);
 				globalCoordinates0[i][0] = (int) globalPosition[0];
 				globalCoordinates0[i][1] = (int) globalPosition[1];
 			}
 		} else if (myRotation == -90) {
 			for (int i = 0; i < coordinates90.length; i++) {
-				double[] localPosition = { coordinates90[i][0], coordinates90[i][1], 1 };
-				double[] globalPosition = MathUtil.multiply(matrix, localPosition);
+				int[] localPosition = { (int) coordinates90[i][0], (int) coordinates90[i][1], 1 };
+				int[] globalPosition = MathUtil.multiply(matrix, localPosition);
 				globalCoordinates90[i][0] = (int) globalPosition[0];
 				globalCoordinates90[i][1] = (int) globalPosition[1];
+//				System.out.println("x: " + globalCoordinates90[i][0]);
+//				System.out.println("y: " + globalCoordinates90[i][1]);
+//				System.out.println("---");
 			}
+//			System.out.println("DONE");
 		} else if (myRotation == -180) {
 			for (int i = 0; i < coordinates180.length; i++) {
-				double[] localPosition = { coordinates180[i][0], coordinates180[i][1], 1 };
-				double[] globalPosition = MathUtil.multiply(matrix, localPosition);
+				int[] localPosition = { (int) coordinates180[i][0], (int) coordinates180[i][1], 1 };
+				int[] globalPosition = MathUtil.multiply(matrix, localPosition);
 				globalCoordinates180[i][0] = (int) globalPosition[0];
 				globalCoordinates180[i][1] = (int) globalPosition[1];
 			}
 		} else if (myRotation == -270) {
 			for (int i = 0; i < coordinates270.length; i++) {
-				double[] localPosition = { coordinates270[i][0], coordinates270[i][1], 1 };
-				double[] globalPosition = MathUtil.multiply(matrix, localPosition);
+				int[] localPosition = { (int) coordinates270[i][0], (int) coordinates270[i][1], 1 };
+				int[] globalPosition = MathUtil.multiply(matrix, localPosition);
 				globalCoordinates270[i][0] = (int) globalPosition[0];
 				globalCoordinates270[i][1] = (int) globalPosition[1];
 			}
 		}
+		
 	}
 	
+	//main function
 	public ArrayList<Integer[]> findLowestYCoord() {
 		//initialise all x global coords into a matrix
 		ArrayList<Integer[]> lowestCoordinates = initialiseXCoords();
@@ -141,11 +187,12 @@ public abstract class TetrisBlock implements KeyListener {
 				}
 			}
 		}
-		for (Integer[] coord: lowestCoordinates) {
-			System.out.println("x " + coord[0]);
-			System.out.println("y " + coord[1]);
-			
-		}
+//		for (Integer[] coord: lowestCoordinates) {
+//			System.out.println("x " + coord[0]);
+//			System.out.println("y " + coord[1]);
+//			
+//		}
+//		System.out.println(myTranslation[1]);
 		
 		Comparator<Integer[]> c = new Comparator<Integer[]>() {
 			public int compare(Integer[] coord1, Integer[] coord2) {
@@ -164,6 +211,7 @@ public abstract class TetrisBlock implements KeyListener {
 		return lowestCoordinates;
 	}
 	
+	//helper function
 	public ArrayList<Integer[]> initialiseXCoords() {
 		ArrayList<Integer[]> globalCoordinates = new ArrayList<Integer[]>();
 		Set<Integer> xCoords = new TreeSet<Integer>(); 
@@ -191,6 +239,7 @@ public abstract class TetrisBlock implements KeyListener {
 			tuple[1] = null;
 			globalCoordinates.add(tuple);
 		}
+		
 		return globalCoordinates;
 	}
 	
@@ -237,6 +286,47 @@ public abstract class TetrisBlock implements KeyListener {
 				if (myRotation == -360) {
 					myRotation = 0;
 				}
+				
+				//bottom edge
+				if (myRotation == 0 && myTranslation[1] < lowestY0) {
+					myTranslation[1] = lowestY0;
+				} else if (myRotation == -90 && myTranslation[1] < lowestY90) {
+					myTranslation[1] = lowestY90;
+				} else if (myRotation == -180 && myTranslation[1] < lowestY180) {
+					myTranslation[1] = lowestY180;
+				} else if (myRotation == -270 && myTranslation[1] < lowestY270) {
+					myTranslation[1] = lowestY270;
+				}
+				
+				//left edge
+				if (myRotation == 0 && myTranslation[0] < lowestX0) {
+					myTranslation[0] = lowestX0;
+				} else if (myRotation == -90 && myTranslation[0] < lowestX90) {
+					myTranslation[0] = lowestX90;
+				} else if (myRotation == -180 && myTranslation[0] < lowestX180) {
+					myTranslation[0] = lowestX180;
+				} else if (myRotation == -270 && myTranslation[0] < lowestX270) {
+					myTranslation[0] = lowestX270;
+				}
+				
+				//right edge
+				if (myRotation == 0 && myTranslation[0] > highestX0) {
+					myTranslation[0] = highestX0;
+				} else if (myRotation == -90 && myTranslation[0] > highestX90) {
+					myTranslation[0] = highestX90;
+				} else if (myRotation == -180 && myTranslation[0] > highestX180) {
+					myTranslation[0] = highestX180;
+				} else if (myRotation == -270 && myTranslation[0] > highestX270) {
+					myTranslation[0] = highestX270;
+				}
+				
+				for (int i = 0; i < globalCoordinates90.length; i++) {
+					System.out.println("x: " + globalCoordinates90[i][0]);
+					System.out.println("y: " + globalCoordinates90[i][1]);
+					System.out.println("---");
+				}
+				System.out.println("DONE");
+
 				break;
 			//increase speed down temporarily
 			case KeyEvent.VK_DOWN:
@@ -281,6 +371,12 @@ public abstract class TetrisBlock implements KeyListener {
 					if (grid.checkLeftEdge(globalCoordinates90)) {
 						myTranslation[0] += -1;
 					}
+//					for (int i = 0; i < globalCoordinates90.length; i++) {
+//						System.out.println("x: " + globalCoordinates90[i][0]);
+//						System.out.println("y: " + globalCoordinates90[i][1]);
+//						System.out.println("---");
+//					}
+//					System.out.println("DONE");
 					break;
 				}
 				
@@ -311,6 +407,12 @@ public abstract class TetrisBlock implements KeyListener {
 					if (grid.checkRightEdge(globalCoordinates90)) {
 						myTranslation[0] += 1;
 					}
+					for (int i = 0; i < globalCoordinates90.length; i++) {
+						System.out.println("x: " + globalCoordinates90[i][0]);
+						System.out.println("y: " + globalCoordinates90[i][1]);
+						System.out.println("---");
+					}
+					System.out.println("DONE");
 					break;
 				}
 				
@@ -344,5 +446,11 @@ public abstract class TetrisBlock implements KeyListener {
 	public void keyTyped(KeyEvent e) {
 
 	}
+
+
+//	public void move() {
+//		if (grid.collision(lowestCoordinates))
+//		myTranslation[1]--;
+//	}
 	
 }

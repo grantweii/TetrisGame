@@ -38,6 +38,9 @@ public class Grid {
 	//global coordinates as points
 	public boolean checkLeftEdge(int[][] points) {
 		for (int i = 0; i < points.length; i++) {
+//			System.out.println("x: " + points[i][0]);
+//			System.out.println("y: " + points[i][1]);
+//			System.out.println("---");
 			if (points[i][0] == 0) {
 				return false;
 			}
@@ -63,12 +66,19 @@ public class Grid {
 		return true;
 	}
 	
+	/**
+	 * true if hits
+	 * @param lowestCoordinates
+	 * @return
+	 */
 	public boolean collision(ArrayList<Integer[]> lowestCoordinates) {
+	
 		for (int i = 0; i < lowestCoordinates.size(); i++) {
 			int x1 = lowestCoordinates.get(i)[0];
 			int x2 = lowestCoordinates.get(i)[2];
 			int y1 = lowestCoordinates.get(i)[1];
 			int y2 = lowestCoordinates.get(i)[3];
+			
 			
 			if (grid[x1][y1] == 1 && grid[x2][y2] == 1) {
 				return true;
