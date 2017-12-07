@@ -12,26 +12,27 @@ public class Grid {
 	public double[] myTranslation = { -5, 10 };
 	
 	//10 x 20 grid 
-	public int[][] grid = { {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
+	public int[][] grid = { {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
 	
 	public Grid() {}
 	
@@ -68,19 +69,23 @@ public class Grid {
 	 * @param lowestCoordinates
 	 * @return
 	 */
-	public boolean collision(ArrayList<Integer[]> lowestCoordinates) {
-	
-		for (int i = 0; i < lowestCoordinates.size(); i++) {
-			int x1 = lowestCoordinates.get(i)[0];
-			int x2 = lowestCoordinates.get(i)[2];
-			int y1 = lowestCoordinates.get(i)[1];
-			int y2 = lowestCoordinates.get(i)[3];
+	public boolean collision(ArrayList<Integer[]> lines) {			
+		for (int i = 0; i < lines.size(); i++) {
+			int x1 = lines.get(i)[0];
+			int y1 = lines.get(i)[1];
+			int x2 = lines.get(i)[2];
+			int y2 = lines.get(i)[3];
 			
-			
-			if (grid[x1][y1] == 1 && grid[x2][y2] == 1) {
+			if (grid[x1][-y1] == 1 && grid[x2][-y2] == 1) {
 				return true;
 			}
 		}
 		return false;
+	}
+
+	public void fillGrid(int[][] globalCoordinates) {
+		for (int i = 0; i < globalCoordinates.length; i++) {
+			grid[globalCoordinates[i][0]][-globalCoordinates[i][1]] = 1;
+		}
 	}
 }

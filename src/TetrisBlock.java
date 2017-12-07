@@ -431,9 +431,49 @@ public abstract class TetrisBlock implements KeyListener {
 	}
 
 
-//	public void move() {
-//		if (grid.collision(lowestCoordinates))
-//		myTranslation[1]--;
-//	}
+	public void move() {
+		ArrayList<Integer[]> lowestCoordinates = findLowestYCoord();
+		ArrayList<Integer[]> lines = lines(findLowestYCoord());
+		
+		if (myRotation == 0) {
+			if (grid.checkBottomEdge(globalCoordinates0)) {
+				myTranslation[1]--;
+				grid.fillGrid(globalCoordinates0);
+				return;
+			} 
+		} else if (myRotation == -90) {
+			if (grid.checkBottomEdge(globalCoordinates90)) {
+				myTranslation[1]--;
+				grid.fillGrid(globalCoordinates90);
+				return;
+			}
+		} else if (myRotation == -180) {	
+			if (grid.checkBottomEdge(globalCoordinates180)) {
+				myTranslation[1]--;
+				grid.fillGrid(globalCoordinates180);
+				return;
+			} 
+		} else if (myRotation == -270) {
+			if (grid.checkBottomEdge(globalCoordinates270)) {
+				myTranslation[1]--;
+				grid.fillGrid(globalCoordinates270);
+				return;
+			}
+		}
+		
+		if (grid.collision(lines)) {
+			myTranslation[1]--;
+			if (myRotation == 0) {
+				grid.fillGrid(globalCoordinates0);
+			} else if (myRotation == -90) {
+				grid.fillGrid(globalCoordinates90);
+			} else if (myRotation == -180) {
+				grid.fillGrid(globalCoordinates180);
+			} else if (myRotation == -270) {
+				grid.fillGrid(globalCoordinates270);
+			}
+			return;
+		}
+	}
 	
 }

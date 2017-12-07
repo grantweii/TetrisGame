@@ -105,7 +105,7 @@ public class ZBlock extends TetrisBlock {
 		gl.glPopMatrix();
 		
 		updateGlobalCoordinates();
-		findLowestYCoord();
+//		findLowestYCoord();
 	}
 
 }

@@ -1,3 +1,5 @@
+import java.util.Random;
+
 import javax.swing.JFrame;
 
 import com.jogamp.opengl.GL;
@@ -18,6 +20,7 @@ public class Game extends JFrame implements GLEventListener {
 	private static final long serialVersionUID = 7476884465971461594L;
 	private Game game;
 	private Grid grid;
+	private boolean activeBlock;
 	private TetrisBlock currentBlock;
 	public double gameSpeed;
 	public long lastTime;
@@ -25,7 +28,7 @@ public class Game extends JFrame implements GLEventListener {
 	public Game() {
 		game = this;
 		grid = new Grid();
-		currentBlock = new JBlock(grid);
+		activeBlock = false;
 		lastTime = System.currentTimeMillis();
 	}
 	
@@ -52,6 +55,25 @@ public class Game extends JFrame implements GLEventListener {
 	@Override
 	public void display(GLAutoDrawable drawable) {
 		GL2 gl = drawable.getGL().getGL2();
+		
+		if (!activeBlock) {
+			Random rand = new Random();
+			if (rand.nextFloat() < (1/7)) {
+				currentBlock = new IBlock(grid);
+			} else if (rand.nextFloat() < (2/7)) {
+				currentBlock = new OBlock(grid);
+			} else if (rand.nextFloat() < (3/7)) {
+				currentBlock = new TBlock(grid);
+			} else if (rand.nextFloat() < (4/7)) {
+				currentBlock = new JBlock(grid);
+			} else if (rand.nextFloat() < (5/7)) {
+				currentBlock = new LBlock(grid);
+			} else if (rand.nextFloat() < (6/7)) {
+				currentBlock = new SBlock(grid);
+			} else if (rand.nextFloat() < (7/7)) {
+				currentBlock = new ZBlock(grid);
+			} 
+		}
 
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT);
 		
@@ -67,6 +89,7 @@ public class Game extends JFrame implements GLEventListener {
 //		}
 		
 		currentBlock.draw(gl);
+		
 
 	}
 
