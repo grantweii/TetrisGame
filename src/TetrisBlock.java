@@ -281,6 +281,7 @@ public abstract class TetrisBlock implements KeyListener {
 	}
 	
 	public void keyPressed(KeyEvent e) {
+		updateGlobalCoordinates();
 		switch (e.getKeyCode()) {
 			
 			//rotate
@@ -432,37 +433,49 @@ public abstract class TetrisBlock implements KeyListener {
 
 
 	public void move() {
+		updateGlobalCoordinates();
+		
 		ArrayList<Integer[]> lowestCoordinates = findLowestYCoord();
 		ArrayList<Integer[]> lines = lines(findLowestYCoord());
 		
 		if (myRotation == 0) {
 			if (grid.checkBottomEdge(globalCoordinates0)) {
 				myTranslation[1]--;
-				grid.fillGrid(globalCoordinates0);
+//				for (int i = 0; i < globalCoordinates0.length; i++) {
+//					System.out.println("x: " + globalCoordinates0[i][0]);
+//					System.out.println("y: " + globalCoordinates0[i][1]);
+//
+//				}
 				return;
-			} 
+			} else {
+				grid.fillGrid(globalCoordinates0);
+			}
 		} else if (myRotation == -90) {
 			if (grid.checkBottomEdge(globalCoordinates90)) {
 				myTranslation[1]--;
-				grid.fillGrid(globalCoordinates90);
 				return;
+			} else {
+				grid.fillGrid(globalCoordinates90);
 			}
 		} else if (myRotation == -180) {	
 			if (grid.checkBottomEdge(globalCoordinates180)) {
 				myTranslation[1]--;
-				grid.fillGrid(globalCoordinates180);
 				return;
-			} 
+			} else {
+				grid.fillGrid(globalCoordinates180);
+			}
 		} else if (myRotation == -270) {
 			if (grid.checkBottomEdge(globalCoordinates270)) {
 				myTranslation[1]--;
-				grid.fillGrid(globalCoordinates270);
 				return;
+			} else {
+				grid.fillGrid(globalCoordinates270);
 			}
 		}
 		
 		if (grid.collision(lines)) {
 			myTranslation[1]--;
+		} else {
 			if (myRotation == 0) {
 				grid.fillGrid(globalCoordinates0);
 			} else if (myRotation == -90) {

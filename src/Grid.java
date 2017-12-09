@@ -2,6 +2,8 @@ import java.util.ArrayList;
 
 public class Grid {
 	
+	public boolean activeBlock;
+	
 	public final static double leftEdge = 0;
 	public final static double rightEdge = 10;
 	public final static double topEdge = 0;
@@ -9,7 +11,7 @@ public class Grid {
 
 	
 	//make bottom left 0,0 
-	public double[] myTranslation = { -5, 10 };
+	public double[] myTranslation = { -5, 11 };
 	
 	//10 x 20 grid 
 	public int[][] grid = { {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -34,7 +36,9 @@ public class Grid {
 							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
 	
-	public Grid() {}
+	public Grid() {
+		activeBlock = false;
+	}
 	
 	//global coordinates as points
 	public boolean checkLeftEdge(int[][] points) {
@@ -76,7 +80,7 @@ public class Grid {
 			int x2 = lines.get(i)[2];
 			int y2 = lines.get(i)[3];
 			
-			if (grid[x1][-y1] == 1 && grid[x2][-y2] == 1) {
+			if (grid[-y1][x1] == 1 && grid[-y2][x2] == 1) {
 				return true;
 			}
 		}
@@ -85,7 +89,8 @@ public class Grid {
 
 	public void fillGrid(int[][] globalCoordinates) {
 		for (int i = 0; i < globalCoordinates.length; i++) {
-			grid[globalCoordinates[i][0]][-globalCoordinates[i][1]] = 1;
+			grid[-globalCoordinates[i][1]][globalCoordinates[i][0]] = 1;
 		}
+		activeBlock = false;
 	}
 }

@@ -20,24 +20,22 @@ public class Game extends JFrame implements GLEventListener {
 	private static final long serialVersionUID = 7476884465971461594L;
 	private Game game;
 	private Grid grid;
-	private boolean activeBlock;
 	private TetrisBlock currentBlock;
 	public double gameSpeed;
 	public long lastTime;
+	public GLJPanel panel;
 	
 	public Game() {
 		game = this;
 		grid = new Grid();
-		activeBlock = false;
 		lastTime = System.currentTimeMillis();
 	}
 	
 	public void run() {
 		GLProfile glp = GLProfile.getDefault();
         GLCapabilities caps = new GLCapabilities(glp);
-        GLJPanel panel = new GLJPanel();
+        panel = new GLJPanel();
         panel.addGLEventListener(this);
-        panel.addKeyListener(currentBlock);
         
         FPSAnimator animator = new FPSAnimator(60);
         animator.add(panel);
@@ -56,24 +54,6 @@ public class Game extends JFrame implements GLEventListener {
 	public void display(GLAutoDrawable drawable) {
 		GL2 gl = drawable.getGL().getGL2();
 		
-		if (!activeBlock) {
-			Random rand = new Random();
-			if (rand.nextFloat() < (1/7)) {
-				currentBlock = new IBlock(grid);
-			} else if (rand.nextFloat() < (2/7)) {
-				currentBlock = new OBlock(grid);
-			} else if (rand.nextFloat() < (3/7)) {
-				currentBlock = new TBlock(grid);
-			} else if (rand.nextFloat() < (4/7)) {
-				currentBlock = new JBlock(grid);
-			} else if (rand.nextFloat() < (5/7)) {
-				currentBlock = new LBlock(grid);
-			} else if (rand.nextFloat() < (6/7)) {
-				currentBlock = new SBlock(grid);
-			} else if (rand.nextFloat() < (7/7)) {
-				currentBlock = new ZBlock(grid);
-			} 
-		}
 
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT);
 		
@@ -82,14 +62,37 @@ public class Game extends JFrame implements GLEventListener {
 		
 		gl.glTranslated(grid.myTranslation[0], grid.myTranslation[1], 0);
 		
-//		long currentTime = System.currentTimeMillis();
-//		if (currentTime - lastTime > 1000) {
-//			currentBlock.move();
-//			lastTime = currentTime;
-//		}
+		long currentTime = System.currentTimeMillis();
+		if (currentTime - lastTime > 1000) {
+			if (!grid.activeBlock) {
+				Random rand = new Random();
+				float num = rand.nextFloat();
+				if (num < (float) 1/7) {
+					currentBlock = new IBlock(grid);
+				} else if (num < (float) 2/7) {
+					currentBlock = new OBlock(grid);
+				} else if (num < (float) 3/7) {
+					currentBlock = new TBlock(grid);
+				} else if (num < (float) 4/7) {
+					currentBlock = new JBlock(grid);
+				} else if (num < (float) 5/7) {
+					currentBlock = new LBlock(grid);
+				} else if (num < (float) 6/7) {
+					currentBlock = new SBlock(grid);
+				} else if (num < (float) 7/7) {
+					currentBlock = new ZBlock(grid);
+				} 
+				grid.activeBlock = true;
+				panel.addKeyListener(currentBlock);
+
+			}
+			currentBlock.move();
+			lastTime = currentTime;
+		}		
 		
-		currentBlock.draw(gl);
-		
+		if (currentBlock != null) {
+			currentBlock.draw(gl);
+		};
 
 	}
 
