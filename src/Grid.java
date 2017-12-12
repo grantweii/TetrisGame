@@ -11,7 +11,7 @@ public class Grid {
 
 	
 	//make bottom left 0,0 
-	public double[] myTranslation = { -5, 11 };
+	public double[] myTranslation = { -5, 10 };
 	
 	//10 x 20 grid 
 	public int[][] grid = { {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -59,6 +59,7 @@ public class Grid {
 		return true;
 	}
 	
+	//returns false if hits bottom edge
 	public boolean checkBottomEdge(int[][] points) {
 		for (int i = 0; i < points.length; i++) {
 			if (points[i][1] == -20) {
@@ -69,7 +70,7 @@ public class Grid {
 	}
 	
 	/**
-	 * true if hits
+	 * true if collides
 	 * @param lowestCoordinates
 	 * @return
 	 */

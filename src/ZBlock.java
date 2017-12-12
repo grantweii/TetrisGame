@@ -4,7 +4,7 @@ public class ZBlock extends TetrisBlock {
 
 	//red block
 	private static final double[] colour = { 1, 0, 0 };
-	private static final int[] myTranslation = { 5, -1 };
+	private static final int[] startingTranslation = { 5, -1 };
 
 	private static final int[][] coordinates0 = { {-2, 1}, {-1, 1}, {-1, 0}, {-2, 0},
 												     {-1, 1}, {0, 1}, {0, 0}, {-1, 0}, 
@@ -38,7 +38,7 @@ public class ZBlock extends TetrisBlock {
 	//^ have no idea how it works...
 
 	public ZBlock(Grid grid) {
-		super(grid, myTranslation, colour, coordinates0, coordinates90, coordinates180, coordinates270, 
+		super(grid, startingTranslation.clone(), colour, coordinates0, coordinates90, coordinates180, coordinates270, 
 				lowestY0, lowestY90, lowestY180, lowestY270, lowestX0, lowestX90, lowestX180, lowestX270,
 				highestX0, highestX90, highestX180, highestX270);
 	}

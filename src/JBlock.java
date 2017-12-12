@@ -4,7 +4,7 @@ public class JBlock extends TetrisBlock {
 
 	//blue block
 	private static final double[] colour = { 0, 0, 1 };
-	private static final int[] myTranslation = { 4, -1 };
+	private static final int[] startingTranslation = { 4, -1 };
 
 	private static final int[][] coordinates0 = { {-1, 1}, {0, 1}, {0, 0}, {-1, 0},
 												     {-1, 0}, {0, 0}, {0, -1}, {-1, -1}, 
@@ -37,7 +37,7 @@ public class JBlock extends TetrisBlock {
 	private static final int highestX270 = 8; //-2
 	
 	public JBlock(Grid grid) {
-		super(grid, myTranslation, colour, coordinates0, coordinates90, coordinates180, coordinates270, 
+		super(grid, startingTranslation.clone(), colour, coordinates0, coordinates90, coordinates180, coordinates270, 
 				lowestY0, lowestY90, lowestY180, lowestY270, lowestX0, lowestX90, lowestX180, lowestX270,
 				highestX0, highestX90, highestX180, highestX270);	}
 

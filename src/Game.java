@@ -1,3 +1,5 @@
+import java.nio.FloatBuffer;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JFrame;
@@ -21,13 +23,15 @@ public class Game extends JFrame implements GLEventListener {
 	private Game game;
 	private Grid grid;
 	private TetrisBlock currentBlock;
-	public double gameSpeed;
-	public long lastTime;
-	public GLJPanel panel;
+	private double gameSpeed;
+	private long lastTime;
+	private GLJPanel panel;
+	private ArrayList<TetrisBlock> gridBlocks;
 	
 	public Game() {
 		game = this;
 		grid = new Grid();
+		gridBlocks = new ArrayList<TetrisBlock>();
 		lastTime = System.currentTimeMillis();
 	}
 	
@@ -59,12 +63,15 @@ public class Game extends JFrame implements GLEventListener {
 		
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 		gl.glLoadIdentity();
-		
+				
 		gl.glTranslated(grid.myTranslation[0], grid.myTranslation[1], 0);
-		
+				
 		long currentTime = System.currentTimeMillis();
 		if (currentTime - lastTime > 1000) {
 			if (!grid.activeBlock) {
+				if (currentBlock != null) {
+					panel.removeKeyListener(currentBlock);
+				}
 				Random rand = new Random();
 				float num = rand.nextFloat();
 				if (num < (float) 1/7) {
@@ -84,16 +91,16 @@ public class Game extends JFrame implements GLEventListener {
 				} 
 				grid.activeBlock = true;
 				panel.addKeyListener(currentBlock);
-
+				gridBlocks.add(currentBlock);				
 			}
 			currentBlock.move();
 			lastTime = currentTime;
-		}		
+		}
+				
+		for (TetrisBlock block: gridBlocks) {
+			block.draw(gl);
+		}
 		
-		if (currentBlock != null) {
-			currentBlock.draw(gl);
-		};
-
 	}
 
 	@Override

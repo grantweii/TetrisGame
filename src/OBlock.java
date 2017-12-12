@@ -4,7 +4,7 @@ public class OBlock extends TetrisBlock {
 	
 	//yellow
 	private static final double[] colour = { 0.9, 0.9, 0 };
-	private static final int[] myTranslation = { 5, -1 };
+	private static final int[] startingTranslation = { 5, -1 };
 
 	private static final int[][] coordinates = { {-1, 1}, {0, 1}, {0, 0}, {-1, 0},
 												    {0, 1}, {1, 1}, {1, 0}, {0, 0}, 
@@ -16,7 +16,7 @@ public class OBlock extends TetrisBlock {
 
 	
 	public OBlock(Grid grid) {
-		super(grid, myTranslation, colour, coordinates, coordinates, coordinates, coordinates, 
+		super(grid, startingTranslation.clone(), colour, coordinates, coordinates, coordinates, coordinates, 
 				lowestY, lowestY, lowestY, lowestY, lowestX, lowestX, lowestX, lowestX,
 				highestX, highestX, highestX, highestX);	
 	}
