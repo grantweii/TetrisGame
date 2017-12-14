@@ -105,6 +105,16 @@ public class ZBlock extends TetrisBlock {
 		gl.glPopMatrix();
 		
 		updateGlobalCoordinates();
+		
+		if (myRotation == 0) {
+			gridCoords = getGridCoords(globalCoordinates0);
+		} else if (myRotation == -90) {
+			gridCoords = getGridCoords(globalCoordinates0);
+		} else if (myRotation == -180) {
+			gridCoords = getGridCoords(globalCoordinates0);
+		} else if (myRotation == -270) {
+			gridCoords = getGridCoords(globalCoordinates0);
+		}
 //		findLowestYCoord();
 	}
 

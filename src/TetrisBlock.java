@@ -15,7 +15,7 @@ public abstract class TetrisBlock implements KeyListener {
 	protected Grid grid;
 	
 	protected double[] colour;
-	public int[][] coordinates0;
+	protected int[][] coordinates0;
 	protected int[][] coordinates90;
 	protected int[][] coordinates180;
 	protected int[][] coordinates270;
@@ -35,6 +35,7 @@ public abstract class TetrisBlock implements KeyListener {
 	protected int highestX90;
 	protected int highestX180;
 	protected int highestX270;
+	protected ArrayList<Integer[]> gridCoords;
 
 
 	
@@ -70,6 +71,7 @@ public abstract class TetrisBlock implements KeyListener {
 		this.highestX90 = highestX90;
 		this.highestX180 = highestX180;
 		this.highestX270 = highestX270;
+		this.gridCoords = new ArrayList<Integer[]>();
 	}
 	
 	
@@ -256,46 +258,23 @@ public abstract class TetrisBlock implements KeyListener {
 	
 	public void keyPressed(KeyEvent e) {
 		updateGlobalCoordinates();
+		
+		if (myRotation == 0) {
+			gridCoords = getGridCoords(globalCoordinates0);
+		} else if (myRotation == -90) {
+			gridCoords = getGridCoords(globalCoordinates90);
+		} else if (myRotation == -180) {
+			gridCoords = getGridCoords(globalCoordinates180);
+		} else if (myRotation == -270) {
+			gridCoords = getGridCoords(globalCoordinates270);
+		}
+		
 		switch (e.getKeyCode()) {
 			
 			//rotate
 			case KeyEvent.VK_UP:
-				myRotation -= 90;
-				if (myRotation == -360) {
-					myRotation = 0;
-				}
-				
-				//bottom edge
-				if (myRotation == 0 && myTranslation[1] < lowestY0) {
-					myTranslation[1] = lowestY0;
-				} else if (myRotation == -90 && myTranslation[1] < lowestY90) {
-					myTranslation[1] = lowestY90;
-				} else if (myRotation == -180 && myTranslation[1] < lowestY180) {
-					myTranslation[1] = lowestY180;
-				} else if (myRotation == -270 && myTranslation[1] < lowestY270) {
-					myTranslation[1] = lowestY270;
-				}
-				
-				//left edge
-				if (myRotation == 0 && myTranslation[0] < lowestX0) {
-					myTranslation[0] = lowestX0;
-				} else if (myRotation == -90 && myTranslation[0] < lowestX90) {
-					myTranslation[0] = lowestX90;
-				} else if (myRotation == -180 && myTranslation[0] < lowestX180) {
-					myTranslation[0] = lowestX180;
-				} else if (myRotation == -270 && myTranslation[0] < lowestX270) {
-					myTranslation[0] = lowestX270;
-				}
-				
-				//right edge
-				if (myRotation == 0 && myTranslation[0] > highestX0) {
-					myTranslation[0] = highestX0;
-				} else if (myRotation == -90 && myTranslation[0] > highestX90) {
-					myTranslation[0] = highestX90;
-				} else if (myRotation == -180 && myTranslation[0] > highestX180) {
-					myTranslation[0] = highestX180;
-				} else if (myRotation == -270 && myTranslation[0] > highestX270) {
-					myTranslation[0] = highestX270;
+				if (pretestRotation()) {
+					rotate();
 				}
 				break;
 			//increase speed down temporarily
@@ -304,62 +283,18 @@ public abstract class TetrisBlock implements KeyListener {
 				break;
 			//strafe left
 			case KeyEvent.VK_LEFT:
-				if (myRotation == 0) {
-					if (grid.checkLeftEdge(globalCoordinates0)) {
+				if (!grid.checkLeftEdge(gridCoords)) {
+					if (!grid.collisionLeft(gridCoords)) {
 						myTranslation[0] += -1;
 					}
-					break;
-				}
-				
-				if (myRotation == -90) {
-					if (grid.checkLeftEdge(globalCoordinates90)) {
-						myTranslation[0] += -1;
-					}
-					break;
-				}
-				
-				if (myRotation == -180) {
-					if (grid.checkLeftEdge(globalCoordinates180)) {
-						myTranslation[0] += -1;
-					}
-					break;
-				}
-				
-				if (myRotation == -270) {
-					if (grid.checkLeftEdge(globalCoordinates270)) {
-						myTranslation[0] += -1;
-					}
-					break;
 				}
 				break;
 			//strafe right
 			case KeyEvent.VK_RIGHT:
-				if (myRotation == 0) {
-					if (grid.checkRightEdge(globalCoordinates0)) {
+				if (!grid.checkRightEdge(gridCoords)) {
+					if (!grid.collisionRight(gridCoords)) {
 						myTranslation[0] += 1;
 					}
-					break;
-				}
-				
-				if (myRotation == -90) {
-					if (grid.checkRightEdge(globalCoordinates90)) {
-						myTranslation[0] += 1;
-					}
-					break;
-				}
-				
-				if (myRotation == -180) {
-					if (grid.checkRightEdge(globalCoordinates180)) {
-						myTranslation[0] += 1;
-					}
-					break;
-				}
-				
-				if (myRotation == -270) {
-					if (grid.checkRightEdge(globalCoordinates270)) {
-						myTranslation[0] += 1;
-					}
-					break;
 				}
 				break;
 			//drop down
@@ -382,52 +317,246 @@ public abstract class TetrisBlock implements KeyListener {
 	/**
 	 * either hits bottom edge or collides or neither
 	 */
+//	public void move() {
+//		updateGlobalCoordinates();
+//		
+//		ArrayList<Integer[]> lowestCoordinates = findLowestYCoord();
+//		ArrayList<Integer[]> lines = lines(findLowestYCoord());
+//				
+//		//if collides, fill grid and return
+//		if (grid.collision(lines)) {
+//			if (myRotation == 0) {
+//				grid.fillGrid(globalCoordinates0);
+//			} else if (myRotation == -90) {
+//				grid.fillGrid(globalCoordinates90);
+//			} else if (myRotation == -180) {
+//				grid.fillGrid(globalCoordinates180);
+//			} else if (myRotation == -270) {
+//				grid.fillGrid(globalCoordinates270);
+//			}
+//			return;
+//		}
+//		
+//		//else continues to here
+//		if (myRotation == 0) {
+//			if (grid.checkBottomEdge(globalCoordinates0)) {
+//				myTranslation[1]--;
+//			} else {
+//				grid.fillGrid(globalCoordinates0);
+//			}
+//		} else if (myRotation == -90) {
+//			if (grid.checkBottomEdge(globalCoordinates90)) {
+//				myTranslation[1]--;
+//			} else {
+//				grid.fillGrid(globalCoordinates90);
+//			}
+//		} else if (myRotation == -180) {	
+//			if (grid.checkBottomEdge(globalCoordinates180)) {
+//				myTranslation[1]--;
+//			} else {
+//				grid.fillGrid(globalCoordinates180);
+//			}
+//		} else if (myRotation == -270) {
+//			if (grid.checkBottomEdge(globalCoordinates270)) {
+//				myTranslation[1]--;
+//			} else {
+//				grid.fillGrid(globalCoordinates270);
+//			}
+//		}
+//	}
+	
 	public void move() {
 		updateGlobalCoordinates();
-		
-		ArrayList<Integer[]> lowestCoordinates = findLowestYCoord();
-		ArrayList<Integer[]> lines = lines(findLowestYCoord());
 				
-		//if collides, fill grid and return
-		if (grid.collision(lines)) {
-			if (myRotation == 0) {
-				grid.fillGrid(globalCoordinates0);
-			} else if (myRotation == -90) {
-				grid.fillGrid(globalCoordinates90);
-			} else if (myRotation == -180) {
-				grid.fillGrid(globalCoordinates180);
-			} else if (myRotation == -270) {
-				grid.fillGrid(globalCoordinates270);
-			}
-			return;
+		if (myRotation == 0) {
+			gridCoords = getGridCoords(globalCoordinates0);
+		} else if (myRotation == -90) {
+			gridCoords = getGridCoords(globalCoordinates90);
+		} else if (myRotation == -180) {
+			gridCoords = getGridCoords(globalCoordinates180);
+		} else if (myRotation == -270) {
+			gridCoords = getGridCoords(globalCoordinates270);
 		}
 		
-		//else continues to here
-		if (myRotation == 0) {
-			if (grid.checkBottomEdge(globalCoordinates0)) {
-				myTranslation[1]--;
-			} else {
-				grid.fillGrid(globalCoordinates0);
-			}
-		} else if (myRotation == -90) {
-			if (grid.checkBottomEdge(globalCoordinates90)) {
-				myTranslation[1]--;
-			} else {
-				grid.fillGrid(globalCoordinates90);
-			}
-		} else if (myRotation == -180) {	
-			if (grid.checkBottomEdge(globalCoordinates180)) {
-				myTranslation[1]--;
-			} else {
-				grid.fillGrid(globalCoordinates180);
-			}
-		} else if (myRotation == -270) {
-			if (grid.checkBottomEdge(globalCoordinates270)) {
-				myTranslation[1]--;
-			} else {
-				grid.fillGrid(globalCoordinates270);
-			}
+		//if hits bottom edge, 
+		if (grid.checkBottomEdge(gridCoords)) {
+			grid.fillGrid(gridCoords);
+		} else if (grid.collisionDown(gridCoords)) {
+			grid.fillGrid(gridCoords);
+		} else {
+			myTranslation[1]--;
+		}	
+	}
+	
+	public void rotate() {
+		myRotation -= 90;
+		if (myRotation == -360) {
+			myRotation = 0;
 		}
+		
+		//bottom edge
+		if (myRotation == 0 && myTranslation[1] < lowestY0) {
+			myTranslation[1] = lowestY0;
+		} else if (myRotation == -90 && myTranslation[1] < lowestY90) {
+			myTranslation[1] = lowestY90;
+		} else if (myRotation == -180 && myTranslation[1] < lowestY180) {
+			myTranslation[1] = lowestY180;
+		} else if (myRotation == -270 && myTranslation[1] < lowestY270) {
+			myTranslation[1] = lowestY270;
+		}
+		
+		//left edge
+		if (myRotation == 0 && myTranslation[0] < lowestX0) {
+			myTranslation[0] = lowestX0;
+		} else if (myRotation == -90 && myTranslation[0] < lowestX90) {
+			myTranslation[0] = lowestX90;
+		} else if (myRotation == -180 && myTranslation[0] < lowestX180) {
+			myTranslation[0] = lowestX180;
+		} else if (myRotation == -270 && myTranslation[0] < lowestX270) {
+			myTranslation[0] = lowestX270;
+		}
+		
+		//right edge
+		if (myRotation == 0 && myTranslation[0] > highestX0) {
+			myTranslation[0] = highestX0;
+		} else if (myRotation == -90 && myTranslation[0] > highestX90) {
+			myTranslation[0] = highestX90;
+		} else if (myRotation == -180 && myTranslation[0] > highestX180) {
+			myTranslation[0] = highestX180;
+		} else if (myRotation == -270 && myTranslation[0] > highestX270) {
+			myTranslation[0] = highestX270;
+		}
+	}
+	
+	/**
+	 * false if it collides
+	 * true if it doesnt
+	 * @return
+	 */
+	public boolean pretestRotation() {
+		int newRotation = myRotation - 90;
+		if (myRotation == -360) {
+			newRotation = 0;
+		}
+		
+		int[] newTranslation = new int[2];
+		newTranslation[0] = myTranslation[0];
+		newTranslation[1] = myTranslation[1];
+		
+		//bottom edge
+		if (newRotation == 0 && myTranslation[1] < lowestY0) {
+			newTranslation[1] = lowestY0;
+		} else if (myRotation == -90 && myTranslation[1] < lowestY90) {
+			newTranslation[1] = lowestY90;
+		} else if (myRotation == -180 && myTranslation[1] < lowestY180) {
+			newTranslation[1] = lowestY180;
+		} else if (myRotation == -270 && myTranslation[1] < lowestY270) {
+			newTranslation[1] = lowestY270;
+		}
+		
+		//left edge
+		if (newRotation == 0 && myTranslation[0] < lowestX0) {
+			newTranslation[0] = lowestX0;
+		} else if (myRotation == -90 && myTranslation[0] < lowestX90) {
+			newTranslation[0] = lowestX90;
+		} else if (myRotation == -180 && myTranslation[0] < lowestX180) {
+			newTranslation[0] = lowestX180;
+		} else if (myRotation == -270 && myTranslation[0] < lowestX270) {
+			newTranslation[0] = lowestX270;
+		}
+		
+		//right edge
+		if (newRotation == 0 && myTranslation[0] > highestX0) {
+			newTranslation[0] = highestX0;
+		} else if (myRotation == -90 && myTranslation[0] > highestX90) {
+			newTranslation[0] = highestX90;
+		} else if (myRotation == -180 && myTranslation[0] > highestX180) {
+			newTranslation[0] = highestX180;
+		} else if (myRotation == -270 && myTranslation[0] > highestX270) {
+			newTranslation[0] = highestX270;
+		}
+		
+		int[][] myTranslationMatrix = MathUtil.translationMatrix(newTranslation);
+		int[][] myRotationMatrix = MathUtil.rotationMatrix(newRotation);
+		int[][] myScaleMatrix = MathUtil.scaleMatrix(1);
+		int[][] TRMatrix = MathUtil.multiply(myTranslationMatrix, myRotationMatrix);
+		int[][] matrix = MathUtil.multiply(TRMatrix, myScaleMatrix);
+			
+		int[][] newGlobalCoordinates0 = new int[16][2];
+		int[][] newGlobalCoordinates90 = new int[16][2];
+		int[][] newGlobalCoordinates180 = new int[16][2];
+		int[][] newGlobalCoordinates270 = new int[16][2];
+		
+		ArrayList<Integer[]> newGridCoords = new ArrayList<Integer[]>();
+		
+		if (newRotation == 0) {
+			for (int i = 0; i < coordinates0.length; i++) {
+				int[] localPosition = { (int) coordinates0[i][0], (int) coordinates0[i][1], 1 };
+				int[] globalPosition = MathUtil.multiply(matrix, localPosition);
+				newGlobalCoordinates0[i][0] = (int) globalPosition[0];
+				newGlobalCoordinates0[i][1] = (int) globalPosition[1];
+			}
+			newGridCoords = getGridCoords(newGlobalCoordinates0);
+		} else if (newRotation == -90) {
+			for (int i = 0; i < coordinates90.length; i++) {
+				int[] localPosition = { (int) coordinates90[i][0], (int) coordinates90[i][1], 1 };
+				int[] globalPosition = MathUtil.multiply(matrix, localPosition);
+				newGlobalCoordinates90[i][0] = (int) globalPosition[0];
+				newGlobalCoordinates90[i][1] = (int) globalPosition[1];
+			}
+			newGridCoords = getGridCoords(newGlobalCoordinates90);
+		} else if (newRotation == -180) {
+			for (int i = 0; i < coordinates180.length; i++) {
+				int[] localPosition = { (int) coordinates180[i][0], (int) coordinates180[i][1], 1 };
+				int[] globalPosition = MathUtil.multiply(matrix, localPosition);
+				newGlobalCoordinates180[i][0] = (int) globalPosition[0];
+				newGlobalCoordinates180[i][1] = (int) globalPosition[1];
+			}
+			newGridCoords = getGridCoords(newGlobalCoordinates180);
+		} else if (newRotation == -270) {
+			for (int i = 0; i < coordinates270.length; i++) {
+				int[] localPosition = { (int) coordinates270[i][0], (int) coordinates270[i][1], 1 };
+				int[] globalPosition = MathUtil.multiply(matrix, localPosition);
+				newGlobalCoordinates270[i][0] = (int) globalPosition[0];
+				newGlobalCoordinates270[i][1] = (int) globalPosition[1];
+			}
+			newGridCoords = getGridCoords(newGlobalCoordinates270);
+		}
+		
+		//if hits bottom edge, 
+		if (grid.collisionRotation(newGridCoords)) {
+			return false;
+		} else {
+			return true;
+		}	
+		
+	}
+	
+	
+	/**
+	 * the grid positions for fillgrid
+	 * @param globalCoords
+	 * @return
+	 */
+	public ArrayList<Integer[]> getGridCoords(int[][] globalCoords) {
+		ArrayList<Integer[]> gridPositions = new ArrayList<Integer[]>();
+		for (int i = 0; i < globalCoords.length; i+=4) {
+			Integer[] coord = new Integer[2];
+			int lowX = globalCoords[i][0];
+			int highY = globalCoords[i][1];
+			for (int j = 1; j < 4; j++) {
+				if (globalCoords[i+j][0] < lowX) {
+					lowX = globalCoords[i+j][0];
+				}
+				if (globalCoords[i+j][1] > highY) {
+					highY = globalCoords[i+j][1];
+				}
+			}
+			coord[0] = lowX;
+			coord[1] = highY;
+			gridPositions.add(coord);
+		}
+		return gridPositions;
 	}
 	
 }
